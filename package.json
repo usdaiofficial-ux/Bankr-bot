@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "main": "bankr.js",
   "scripts": {
-    "start": "node bankr.js"
+    "start": "node index.js"
   }
 }
