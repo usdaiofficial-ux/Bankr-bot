@@ -1,26 +1,28 @@
-const axios = require("axios");
-
 const API_KEY = process.env.BANKR_API_KEY;
 
 async function checkBalance() {
   try {
-    const response = await axios.post(
-      "https://api.bankr.bot/v1/agent/run",
-      {
-        message: "show my wallet balance"
+    const res = await fetch("https://api.bankr.bot/agent/prompt", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-API-Key": API_KEY
       },
-      {
-        headers: {
-          Authorization: `Bearer ${API_KEY}`,
-          "Content-Type": "application/json"
-        }
-      }
-    );
+      body: JSON.stringify({
+        prompt: "show all my assets and balances"
+      })
+    });
 
-    console.log(response.data);
+    const data = await res.json();
+    console.log(data);
+
   } catch (err) {
-    console.error(err.response?.data || err.message);
+    console.error(err);
   }
 }
 
+console.log("Bankr bot running");
+
 checkBalance();
+
+setInterval(checkBalance, 60000);
